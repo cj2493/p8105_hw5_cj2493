@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 )
 library(tidyverse)
 library(purrr)
+library(rvest)
+library(httr)
 ```
 
 ## Problem 1
@@ -50,3 +52,42 @@ files_df %>%
 
 
 ## Problem 2
+
+
+```{r, read_api}
+# city_homicides = GET("https://raw.githubusercontent.com/washingtonpost/data-homicides/master/homicide-data.csv") %>%
+  # content("parsed")
+
+library(RCurl)
+
+city_homicides = read_csv(getURL("https://raw.githubusercontent.com/washingtonpost/data-homicides/master/homicide-data.csv")) 
+
+city_homicides = city_homicides %>%
+  janitor::clean_names() %>%
+  mutate(city_state = str_c(city, ", ", state)) 
+
+
+```
+
+
+```{r}
+unsolved_summary = city_homicides %>%
+  group_by(city_state) %>% 
+  summarize(n = n(),
+            sum_unsolved = sum(disposition == "Closed without arrest" | disposition == "Open/No arrest"))
+
+baltimore_unsolved = unsolved_summary %>%
+  filter(city_state == "Baltimore, MD")
+
+prop_output = prop.test(baltimore_unsolved$sum_unsolved, baltimore_unsolved$n)
+broom::tidy(prop_output)
+baltimore_estimate = prop_output$estimate
+baltimore_conf_int = prop_output$conf.int
+```
+
+Now do the same for all of the cities
+
+```{r}
+
+```
+
