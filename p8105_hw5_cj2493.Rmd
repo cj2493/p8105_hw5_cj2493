@@ -13,5 +13,26 @@ knitr::opts_chunk$set(
   fig.asp = .6,
   out.width = "90%"
 )
+library(tidyverse)
+library(purrr)
 ```
 
+## Problem 1
+
+First, read in all the control arm files and experimental arm files.
+
+```{r, read_in}
+vec_files = list.files(path = "./data")
+vec_file_path = str_c("./data/", vec_files)
+
+# output = vector("list", length = 20)
+
+
+output = purrr::map_df(vec_file_path, read_csv) 
+
+
+```
+
+
+
+## Problem 2
