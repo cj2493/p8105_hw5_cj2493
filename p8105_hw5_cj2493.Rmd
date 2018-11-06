@@ -1,0 +1,17 @@
+---
+title: "p8105_hw5_cj2493"
+date: "November 6, 2018"
+author: "Courtney Johnson"
+output: github_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
+```
+
