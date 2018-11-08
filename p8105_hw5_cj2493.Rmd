@@ -23,7 +23,7 @@ library(viridis)
 
 ## Problem 1
 
-First, read in all the control arm files and experimental arm files. Then, tidy the data.
+Create a tidy dataframe from all participants, including the subject ID, arm, and observations over time.
 
 ```{r, read_in, message = FALSE}
 files_df = 
@@ -41,6 +41,7 @@ tibble(vec_files = list.files(path = "./data"),
   mutate(subject = as.factor(subject),
          arm = as.factor(arm),
          week = as.numeric(week)) 
+head(files_df)
 ```
 
 Make a spaghetti plot showing observations on each subject over time, and comment on differences between groups.
@@ -54,6 +55,7 @@ files_df %>%
        y = "Measurement")
 ```
 
+For the control arm, the observations over time jump a lot, but seem to be vary around a stable average. However, for the experimental arm, the observations seem to steadily increase over time. 
 
 ## Problem 2
 
